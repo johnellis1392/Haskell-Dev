@@ -1,6 +1,9 @@
+
 module Main where
 
-import Lib
+import Celestia (someFunc)
 
 main :: IO ()
-main = someFunc
+main = do
+  putStrLn $ someFunc
+

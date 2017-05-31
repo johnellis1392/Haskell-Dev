@@ -2,7 +2,7 @@
 module UtilSpec (spec) where
 
 import Test.Hspec (describe, it, shouldBe, Spec)
-import Util (hello, goodbye)
+import Util (hello, goodbye, someFunc2)
 
 spec :: Spec
 spec = do
@@ -13,4 +13,8 @@ spec = do
   describe "goodbye" $ do
     it "should return 'Goodbye'" $ do
       goodbye `shouldBe` "Goodbye"
+
+  describe "someFunc2" $ do
+    it "should return 'someFunc'" $ do
+      someFunc2 `shouldBe` "someFunc"
 
