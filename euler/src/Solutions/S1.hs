@@ -7,6 +7,6 @@ main upperBound = product . multiples $ upTo upperBound
   multiples = filter isMultiple
   isMultiple i = multipleOf 3 i || multipleOf 5 i
   multipleOf i n = n `mod` i == 0
-  upTo n = [1..n]
+  upTo n = [1..n - 1]
 
 
