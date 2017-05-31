@@ -1,0 +1,12 @@
+-- Calculate the product of all multiples of 3 and 5 from 1 through 1000
+module Solutions.S1 where
+
+main :: Integer -> Integer
+main upperBound = product . multiples $ upTo upperBound
+  where
+  multiples = filter isMultiple
+  isMultiple i = multipleOf 3 i || multipleOf 5 i
+  multipleOf i n = n `mod` i == 0
+  upTo n = [1..n]
+
+

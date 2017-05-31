@@ -1,4 +1,5 @@
-module Utils.Consts (
+
+module Util.Consts (
   solutions,
   tests,
   main
