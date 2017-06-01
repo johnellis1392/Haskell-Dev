@@ -13,6 +13,8 @@ module Celestia.Util.Math (
 ) where
 
 import Debug.Trace (trace)
+import Control.Monad
+import Data.List ((\\))
 
 
 -- Generate Infinite Fibonacci Sequence
@@ -39,12 +41,17 @@ primeFactors n = _prime_factors sieveOfEratosthenes n
 _prime_seed :: [Int]
 _prime_seed = [2]
 
+-- Infinite list for generating values to seed prime functions
+_number_generator :: [Int]
+_number_generator =
+  let inital_prime = last _prime_seed
+      seed = if inital_prime `mod` 2 == 0 then inital_prime + 1 else inital_prime
+    in [seed, seed + 2..]
+
 
 -- Prime sieves
--- sieveOfEratosthenes :: Int -> [Int]
--- sieveOfEratosthenes n = []
 sieveOfEratosthenes :: [Int]
-sieveOfEratosthenes = _prime_seed ++ _sieve _prime_seed [(last _prime_seed)..]
+sieveOfEratosthenes = _prime_seed ++ _sieve _prime_seed _number_generator
   where
   _sieve :: [Int] -> [Int] -> [Int]
   _sieve primes (n:numbers)
@@ -59,11 +66,39 @@ sieveOfEratosthenes' :: Int -> [Int]
 sieveOfEratosthenes' n = takeWhile ((>) n) sieveOfEratosthenes
 
 
+-- Sieve of Sundaram:
+-- 1) For each number from 1 to n, 
+--    remove all numbers in `i + j + 2ij` given:
+--      i,j `in` (set of all integers), 1 <= i <= j
+--      i + j + 2ij <= n
+-- 2) Feed all remaining numbers through the equation:
+--    f(x) = 2x + 1
 sieveOfSundaram :: [Int]
 sieveOfSundaram = []
 
 sieveOfSundaram' :: Int -> [Int]
-sieveOfSundaram' n = takeWhile ((>) n) sieveOfSundaram
+sieveOfSundaram' n = takeWhile ((>) n) _sieve
+  where
+  _sieve :: [Int]
+  _sieve = fmap (\i -> 2 * i + 1) $ _gen \\ _primes
+
+  _gen :: [Int]
+  _gen = fmap _h . filter _f . filter _g . _make_tuples $ _primes
+
+  _primes :: [Int]
+  _primes = take n $ _prime_seed
+
+  _make_tuples :: [Int] -> [(Int, Int)]
+  _make_tuples = fmap (\[i, j] -> (i, j)) . replicateM 2
+
+  _h :: (Int, Int) -> Int
+  _h (i, j) = i + j + 2 * i * j
+
+  _f :: (Int, Int) -> Bool
+  _f (i, j) = _h (i, j) <= n
+
+  _g :: (Int, Int) -> Bool
+  _g (i, j) = i <= j
 
 
 sieveOfAtkin :: [Int]
