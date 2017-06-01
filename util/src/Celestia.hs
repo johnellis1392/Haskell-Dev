@@ -1,8 +1,6 @@
 module Celestia (
   module Celestia.Util,
-  someFunc,
-  euclidean_gcd,
-  ro_factorization
+  someFunc
 ) where
 
 import Celestia.Util

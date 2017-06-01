@@ -1,7 +1,14 @@
 module Celestia.Util.MathSpec (spec) where
 
 import Test.Hspec (Spec, describe, context, it, shouldBe)
-import Celestia.Util.Math (fibonacci, primeFactors, sieveOfEratosthenes, sieveOfSundaram, sieveOfAtkin)
+import Celestia.Util.Math (
+  fibonacci,
+  primeFactors,
+  sieveOfEratosthenes,
+  sieveOfSundaram,
+  sieveOfAtkin,
+  euclidean_gcd,
+  ro_factorization)
 
 spec :: Spec
 spec = do
@@ -14,6 +21,18 @@ spec = do
   describe "primeFactors" $ do
     it "should generate the prime factors of a number" $ do
       primeFactors 13195 `shouldBe` [5,7,13,29]
+
+
+  describe "euclidean_gcd" $ do
+    it "should calculate the greatest common divisor" $ do
+      euclidean_gcd 1071 462 `shouldBe` 21
+
+
+  describe "ro_factorization" $ do
+    it "should generate a complete prime factorization for a number" $ do
+      ro_factorization 91 `shouldBe` Just 7
+      -- ro_factorization 91 `shouldBe` Just [7,13]
+
 
   describe "Prime Sieves" $ do
     context "sieveOfEratosthenes" $ do

@@ -4,7 +4,9 @@ module Celestia.Util.Math (
   primeFactors,
   sieveOfEratosthenes,
   sieveOfSundaram,
-  sieveOfAtkin
+  sieveOfAtkin,
+  euclidean_gcd,
+  ro_factorization
 ) where
 
 
