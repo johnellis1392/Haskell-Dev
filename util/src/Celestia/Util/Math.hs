@@ -9,7 +9,10 @@ module Celestia.Util.Math (
   sieveOfAtkin,
   sieveOfAtkin',
   euclidean_gcd,
-  ro_factorization
+  ro_factorization,
+
+  -- TODO: move this out of this module
+  diff
 ) where
 
 import Debug.Trace (trace)
@@ -77,28 +80,29 @@ sieveOfSundaram :: [Int]
 sieveOfSundaram = []
 
 sieveOfSundaram' :: Int -> [Int]
-sieveOfSundaram' n = takeWhile ((>) n) _sieve
+sieveOfSundaram' n = 2 : takeWhile ((>) n) _sieve
   where
+
   _sieve :: [Int]
-  _sieve = fmap (\i -> 2 * i + 1) $ _gen \\ _primes
+  _sieve = fmap (\i -> 2 * i + 1) $ diff [1..] _sieve'
 
-  _gen :: [Int]
-  _gen = fmap _h . filter _f . filter _g . _make_tuples $ _primes
+  _sieve' :: [Int]
+  _sieve' = filter ((>) n) . fmap f $ _pairs
 
-  _primes :: [Int]
-  _primes = take n $ _prime_seed
+  _pairs :: [(Int, Int)]
+  _pairs = [(i, j) | j <- [1..], i <- [1..j]]
 
-  _make_tuples :: [Int] -> [(Int, Int)]
-  _make_tuples = fmap (\[i, j] -> (i, j)) . replicateM 2
+  f :: (Int, Int) -> Int
+  f (i, j) = i + j + 2 * i * j
 
-  _h :: (Int, Int) -> Int
-  _h (i, j) = i + j + 2 * i * j
 
-  _f :: (Int, Int) -> Bool
-  _f (i, j) = _h (i, j) <= n
-
-  _g :: (Int, Int) -> Bool
-  _g (i, j) = i <= j
+-- Calculate a sequential list difference between two ordered elements
+diff :: Eq a => [a] -> [a] -> [a]
+diff [] _ = []
+diff x [] = x
+diff (x:xs) (y:ys)
+  | x == y    = diff xs ys
+  | otherwise = x : diff xs (y:ys)
 
 
 sieveOfAtkin :: [Int]
