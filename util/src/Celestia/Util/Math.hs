@@ -26,12 +26,12 @@ import Celestia.Data.List (
 -- ## Private Values ##
 
 -- Initial seed to start prime sieves
-_prime_seed :: [Int]
+_prime_seed :: [Integer]
 _prime_seed = [2]
 
 
 -- Infinite list for generating values to seed prime functions
-_number_generator :: [Int]
+_number_generator :: [Integer]
 _number_generator =
   let inital_prime = last _prime_seed
       seed = if inital_prime `mod` 2 == 0 then inital_prime + 1 else inital_prime
@@ -51,10 +51,10 @@ fibonacci = _fibonacci 0 1
 
 
 -- Generate the prime factors of a number
-primeFactors :: Int -> [Int]
+primeFactors :: Integer -> [Integer]
 primeFactors n = _prime_factors sieveOfEratosthenes n
   where
-  _prime_factors :: [Int] -> Int -> [Int]
+  _prime_factors :: [Integer] -> Integer -> [Integer]
   _prime_factors [] _ = []
   _prime_factors (head:tail) n
     | head >= n    = [head]
@@ -64,19 +64,19 @@ primeFactors n = _prime_factors sieveOfEratosthenes n
 
 
 -- Prime sieves
-sieveOfEratosthenes :: [Int]
+sieveOfEratosthenes :: [Integer]
 sieveOfEratosthenes = _prime_seed ++ _sieve _prime_seed _number_generator
   where
-  _sieve :: [Int] -> [Int] -> [Int]
+  _sieve :: [Integer] -> [Integer] -> [Integer]
   _sieve primes (n:numbers)
     | any (_divisible n) primes = _sieve primes numbers
     | otherwise = n : _sieve (primes ++ [n]) numbers
 
-  _divisible :: Int -> Int -> Bool
+  _divisible :: Integer -> Integer -> Bool
   _divisible i j = i `mod` j == 0
 
 -- Sieve with integer limit
-sieveOfEratosthenes' :: Int -> [Int]
+sieveOfEratosthenes' :: Integer -> [Integer]
 sieveOfEratosthenes' n = takeWhile ((>) n) sieveOfEratosthenes
 
 
