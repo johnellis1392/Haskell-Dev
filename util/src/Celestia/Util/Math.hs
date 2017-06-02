@@ -12,7 +12,9 @@ module Celestia.Util.Math (
   ro_factorization,
 
   -- TODO: move this out of this module
-  diff
+  diff_seq,
+  duplicates,
+  unique
 ) where
 
 import Debug.Trace (trace)
@@ -84,25 +86,33 @@ sieveOfSundaram' n = 2 : takeWhile ((>) n) _sieve
   where
 
   _sieve :: [Int]
-  _sieve = fmap (\i -> 2 * i + 1) $ diff [1..] _sieve'
+  _sieve = fmap ((+) 1 . (*) 2) $ [1..n] \\ _sieve'
 
   _sieve' :: [Int]
   _sieve' = filter ((>) n) . fmap f $ _pairs
 
   _pairs :: [(Int, Int)]
-  _pairs = [(i, j) | j <- [1..], i <- [1..j]]
+  _pairs = [(i, j) | j <- [1..n], i <- [1..j]]
 
   f :: (Int, Int) -> Int
   f (i, j) = i + j + 2 * i * j
 
+--sieveOfSundaram' :: Int -> [Int]
+--sieveOfSundaram' n = 2 : takeWhile ((>) n) _sieve
+--  where
+--
+--  _sieve :: [Int]
+--  _sieve = fmap (\i -> 2 * i + 1) $ diff_seq [1..] _sieve'
+--
+--  _sieve' :: [Int]
+--  _sieve' = filter ((>) n) . fmap f $ _pairs
+--
+--  _pairs :: [(Int, Int)]
+--  _pairs = [(i, j) | j <- [1..], i <- [1..j]]
+--
+--  f :: (Int, Int) -> Int
+--  f (i, j) = i + j + 2 * i * j
 
--- Calculate a sequential list difference between two ordered elements
-diff :: Eq a => [a] -> [a] -> [a]
-diff [] _ = []
-diff x [] = x
-diff (x:xs) (y:ys)
-  | x == y    = diff xs ys
-  | otherwise = x : diff xs (y:ys)
 
 
 sieveOfAtkin :: [Int]
@@ -139,5 +149,36 @@ ro_factorization n = _ro_factorization n 2 2 1
 
   gcd = euclidean_gcd
 
+
+
+-- Get a list of duplicates from a list (lazy)
+duplicates :: Eq a => [a] -> [a]
+duplicates xs = duplicates' xs []
+  where
+  duplicates' [] _ = []
+  duplicates' (x:xs) visited
+    | x `elem` visited = x : duplicates' xs visited
+    | otherwise        = duplicates' xs (x:visited)
+
+
+-- Get only unique elements from list (lazy)
+unique :: Eq a => [a] -> [a]
+unique xs = unique' xs []
+  where
+  unique' [] _ = []
+  unique' (x:xs) visited
+    | x `elem` visited = unique' xs visited
+    | otherwise        = x : unique' xs (x:visited)
+
+
+
+-- Calculate a sequential list difference between two ordered elements (lazy)
+-- NOTE: Expects both lists to be ordered
+diff_seq :: Eq a => [a] -> [a] -> [a]
+diff_seq [] _ = []
+diff_seq x [] = x
+diff_seq (x:xs) (y:ys)
+  | x == y    = diff_seq xs ys
+  | otherwise = x : diff_seq xs (y:ys)
 
 
