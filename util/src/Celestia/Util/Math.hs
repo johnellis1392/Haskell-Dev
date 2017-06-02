@@ -18,8 +18,11 @@ module Celestia.Util.Math (
 ) where
 
 import Debug.Trace (trace)
-import Control.Monad
 import Data.List ((\\))
+import Celestia.Data.List (
+  duplicates,
+  unique,
+  diff_seq )
 
 
 -- Generate Infinite Fibonacci Sequence
@@ -148,37 +151,5 @@ ro_factorization n = _ro_factorization n 2 2 1
   g x' = (x' ^ 2 + 1) `mod` n
 
   gcd = euclidean_gcd
-
-
-
--- Get a list of duplicates from a list (lazy)
-duplicates :: Eq a => [a] -> [a]
-duplicates xs = duplicates' xs []
-  where
-  duplicates' [] _ = []
-  duplicates' (x:xs) visited
-    | x `elem` visited = x : duplicates' xs visited
-    | otherwise        = duplicates' xs (x:visited)
-
-
--- Get only unique elements from list (lazy)
-unique :: Eq a => [a] -> [a]
-unique xs = unique' xs []
-  where
-  unique' [] _ = []
-  unique' (x:xs) visited
-    | x `elem` visited = unique' xs visited
-    | otherwise        = x : unique' xs (x:visited)
-
-
-
--- Calculate a sequential list difference between two ordered elements (lazy)
--- NOTE: Expects both lists to be ordered
-diff_seq :: Eq a => [a] -> [a] -> [a]
-diff_seq [] _ = []
-diff_seq x [] = x
-diff_seq (x:xs) (y:ys)
-  | x == y    = diff_seq xs ys
-  | otherwise = x : diff_seq xs (y:ys)
 
 

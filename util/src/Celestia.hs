@@ -1,11 +1,7 @@
 module Celestia (
   module Celestia.Util,
-  someFunc
+  module Celestia.Data
 ) where
-
 import Celestia.Util
-
-someFunc :: String
-someFunc = "someFunc"
-
+import Celestia.Data
 

@@ -11,8 +11,8 @@ import Celestia.Util.Math (
   sieveOfAtkin,
   sieveOfAtkin',
   euclidean_gcd,
-  ro_factorization,
-  diff_seq)
+  ro_factorization )
+
 
 spec :: Spec
 spec = do
@@ -55,11 +55,6 @@ spec = do
   --   context "sieveOfAtkin" $ do
   --     it "should generate a list of primes" $ do
   --       sieveOfAtkin 100 `shouldBe` [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]
-
-  describe "diff_seq" $ do
-    it "should calculate a list difference" $ do
-      diff_seq [1..10] [1,3,5] `shouldBe` [2,4,6,7,8,9,10]
-      diff_seq [1..100] [1,3..100] `shouldBe` [2,4..100]
 
 
 
