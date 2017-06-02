@@ -15,7 +15,6 @@ spec = do
       s3 29 `shouldBe` 29
       s3 (2 ^ 10) `shouldBe` 2
 
-      -- s3 600851475143
 
       for_ [10..20] $ \i -> do
         let examplePrimes = take i sieveOfEratosthenes
