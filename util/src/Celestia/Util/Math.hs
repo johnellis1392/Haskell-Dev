@@ -57,9 +57,9 @@ primeFactors n = _prime_factors sieveOfEratosthenes n
   _prime_factors :: [Int] -> Int -> [Int]
   _prime_factors [] _ = []
   _prime_factors (head:tail) n
-    | head > sqrti n = []
-    | n `div` head == 0 = head : _prime_factors (head:tail) (n `div` head)
-    | otherwise     = _prime_factors tail n
+    | head >= n    = [head]
+    | n `mod` head == 0 = head : _prime_factors (head:tail) (n `div` head)
+    | otherwise         =  _prime_factors tail n
 
 
 
