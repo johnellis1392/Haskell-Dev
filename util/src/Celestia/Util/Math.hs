@@ -10,11 +10,7 @@ module Celestia.Util.Math (
   sieveOfAtkin',
   euclidean_gcd,
   ro_factorization,
-
-  -- TODO: move this out of this module
-  diff_seq,
-  duplicates,
-  unique
+  sqrti
 ) where
 
 import Debug.Trace (trace)
@@ -24,6 +20,28 @@ import Celestia.Data.List (
   unique,
   diff_seq )
 
+
+
+-- ####################
+-- ## Private Values ##
+
+-- Initial seed to start prime sieves
+_prime_seed :: [Int]
+_prime_seed = [2]
+
+
+-- Infinite list for generating values to seed prime functions
+_number_generator :: [Int]
+_number_generator =
+  let inital_prime = last _prime_seed
+      seed = if inital_prime `mod` 2 == 0 then inital_prime + 1 else inital_prime
+    in [seed, seed + 2..]
+
+
+
+
+-- ######################
+-- ## Public functions ##
 
 -- Generate Infinite Fibonacci Sequence
 fibonacci :: [Integer]
@@ -39,22 +57,10 @@ primeFactors n = _prime_factors sieveOfEratosthenes n
   _prime_factors :: [Int] -> Int -> [Int]
   _prime_factors [] _ = []
   _prime_factors (head:tail) n
-    | head > floor (sqrt $ fromIntegral n) = []
+    | head > sqrti n = []
     | n `div` head == 0 = head : _prime_factors (head:tail) (n `div` head)
     | otherwise     = _prime_factors tail n
 
-
-
--- Initial seed to start prime sieves
-_prime_seed :: [Int]
-_prime_seed = [2]
-
--- Infinite list for generating values to seed prime functions
-_number_generator :: [Int]
-_number_generator =
-  let inital_prime = last _prime_seed
-      seed = if inital_prime `mod` 2 == 0 then inital_prime + 1 else inital_prime
-    in [seed, seed + 2..]
 
 
 -- Prime sieves
@@ -151,5 +157,11 @@ ro_factorization n = _ro_factorization n 2 2 1
   g x' = (x' ^ 2 + 1) `mod` n
 
   gcd = euclidean_gcd
+
+
+-- Integer sqrt function
+sqrti :: Integral a => a -> a
+sqrti = floor . sqrt . fromIntegral
+
 
 

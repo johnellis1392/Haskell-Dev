@@ -1,3 +1,4 @@
+
 module Celestia.Util.MathSpec (spec) where
 
 import Test.Hspec (Spec, describe, context, it, shouldBe)
@@ -22,12 +23,12 @@ spec = do
       take 21 fibonacci `shouldBe` [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765]
 
 
-  -- describe "primeFactors" $ do
-  --   it "should generate the prime factors of a number" $ do
-  --     primeFactors 4 `shouldBe` [2,2]
-  --     primeFactors 6 `shouldBe` [2,3]
-  --     primeFactors 10 `shouldBe` [2,5]
-  --     primeFactors 13195 `shouldBe` [5,7,13,29]
+  describe "primeFactors" $ do
+    it "should generate the prime factors of a number" $ do
+      primeFactors 4 `shouldBe` [2,2]
+      primeFactors 6 `shouldBe` [2,3]
+      primeFactors 10 `shouldBe` [2,5]
+      primeFactors 13195 `shouldBe` [5,7,13,29]
 
 
   describe "euclidean_gcd" $ do
