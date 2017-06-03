@@ -22,6 +22,7 @@ library
                      , Solutions.S2
                      , Solutions.S3
                      , Solutions.S4
+                     , Solutions.S5
   build-depends:       base >= 4.7 && < 5
                      , util
   default-language:    Haskell2010
@@ -49,6 +50,7 @@ test-suite euler-test
                      , Solutions.S2Spec
                      , Solutions.S3Spec
                      , Solutions.S4Spec
+                     , Solutions.S5Spec
   default-language:    Haskell2010
 
 source-repository head
