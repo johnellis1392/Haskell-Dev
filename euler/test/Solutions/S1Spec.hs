@@ -1,3 +1,4 @@
+
 module Solutions.S1Spec where
 
 import Solutions.S1 (s1)
