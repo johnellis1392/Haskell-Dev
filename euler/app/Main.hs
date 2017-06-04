@@ -1,6 +1,11 @@
 module Main where
 
+import Solutions.S551 (s551'')
+
 main :: IO ()
 main = do
-  putStrLn $ "Hello, World!"
+  putStrLn $ "Running..."
+  let solution = s551'' (10 ^ 16)
+  putStrLn $ "Solution: " ++ show solution 
+
 
