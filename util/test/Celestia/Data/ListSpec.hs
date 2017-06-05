@@ -5,7 +5,9 @@ import Test.Hspec (Spec, describe, context, it, shouldBe)
 import Celestia.Data.List (
   duplicates,
   unique,
-  diff_seq )
+  diff_seq,
+  slice,
+  subsequences )
 
 
 spec :: Spec
@@ -32,5 +34,23 @@ spec = do
       diff_seq [1,2,3] [3] `shouldBe` [1,2]
       diff_seq [1..100] [1..100] `shouldBe` []
       diff_seq [1..100] [2,4..100] `shouldBe` [1,3..100]
+
+
+  describe "slice" $ do
+    it "should get a slice from a list" $ do
+      let xs = [0..100]
+      slice 10 10 xs `shouldBe` [10..19]
+      slice 10 1 xs `shouldBe` [10]
+
+
+  describe "subsequences" $ do
+    it "should calculate a list of n-digit subsequences of a given list" $ do
+      let xs = [0..10]
+      subsequences xs 1 `shouldBe` fmap (:[]) xs
+      subsequences xs 5 `shouldBe` [[i..j - 1] | i <- [0..6], let j = i + 5]
+
+      let ys = [0..100]
+      subsequences ys 5 `shouldBe` [[i..j - 1] | i <- [0..100 - 4], let j = i + 5]
+
 
 

@@ -2,16 +2,20 @@
 module Celestia.Data.List (
   duplicates,
   unique,
-  diff_seq
+  diff_seq,
+  slice,
+  subsequences
 ) where
 
+import Debug.Trace (traceShowId)
 import Control.Monad (replicateM)
+import Data.Traversable (forM)
 import Data.List (
   reverse,
   intersperse,
   intercalate,
   transpose,
-  subsequences,
+  -- subsequences,
   permutations,
   scanl,
   mapAccumL, -- :: Traversable t => (a -> b -> (a, c)) -> a -> t b -> (a, t c)
@@ -51,6 +55,17 @@ diff_seq x [] = x
 diff_seq (x:xs) (y:ys)
   | x == y    = diff_seq xs ys
   | otherwise = x : diff_seq xs (y:ys)
+
+
+
+-- Get an n-element slice from a list
+slice :: Int -> Int -> [a] -> [a]
+slice start num xs = take num . drop start $ xs
+
+
+-- Calculate a list of subsequences from a given list
+subsequences :: [a] -> Int -> [[a]]
+subsequences xs n = fmap (\i -> slice i n xs) [0..length xs - n]
 
 
 
