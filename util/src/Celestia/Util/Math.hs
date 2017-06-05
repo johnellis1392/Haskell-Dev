@@ -10,7 +10,8 @@ module Celestia.Util.Math (
   sieveOfAtkin',
   euclidean_gcd,
   ro_factorization,
-  sqrti
+  sqrti,
+  differences
 ) where
 
 import Debug.Trace (trace, traceShowId)
@@ -175,5 +176,8 @@ ro_factorization n = _ro_factorization n 2 2 1
 sqrti :: Integral a => a -> a
 sqrti = floor . sqrt . fromIntegral
 
+
+differences :: Num a => [a] -> [a]
+differences xs = fmap (abs . uncurry (-)) $ zip (init xs) (tail xs)
 
 
