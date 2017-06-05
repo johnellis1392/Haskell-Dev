@@ -45,11 +45,14 @@ spec = do
     context "sieveOfEratosthenes" $ do
       it "should generate a list of primes" $ do
         take 4 sieveOfEratosthenes `shouldBe` [2,3,5,7]
+        take 25 sieveOfEratosthenes `shouldBe` [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]
         sieveOfEratosthenes' 10 `shouldBe` [2,3,5,7]
         sieveOfEratosthenes' 100 `shouldBe` [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]
 
     context "sieveOfSundaram" $ do
       it "should generate a list of primes" $ do
+        take 4 sieveOfSundaram `shouldBe` [2,3,5,7]
+        take 25 sieveOfSundaram `shouldBe` [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]
         sieveOfSundaram' 10 `shouldBe` [2,3,5,7]
         sieveOfSundaram' 100 `shouldBe` [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]
 

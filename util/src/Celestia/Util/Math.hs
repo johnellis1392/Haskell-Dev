@@ -13,7 +13,7 @@ module Celestia.Util.Math (
   sqrti
 ) where
 
-import Debug.Trace (trace)
+import Debug.Trace (trace, traceShowId)
 import Data.List ((\\))
 import Celestia.Data.List (
   duplicates,
@@ -88,7 +88,19 @@ sieveOfEratosthenes' n = takeWhile ((>) n) sieveOfEratosthenes
 -- 2) Feed all remaining numbers through the equation:
 --    f(x) = 2x + 1
 sieveOfSundaram :: [Int]
-sieveOfSundaram = []
+sieveOfSundaram = (:) 2 $ fmap ((+1) . (*2)) . unique . diff_seq [1..] $  _sieve
+
+  where
+
+  _sieve :: [Int]
+  _sieve = fmap f $ _pairs
+
+  _pairs :: [(Int, Int)]
+  _pairs = [(i, j) | j <- [1..], i <- [1..j]]
+
+  f :: (Int, Int) -> Int
+  f (i, j) = i + j + 2 * i * j
+
 
 sieveOfSundaram' :: Int -> [Int]
 sieveOfSundaram' n = 2 : takeWhile ((>) n) _sieve
