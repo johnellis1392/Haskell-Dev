@@ -15,6 +15,9 @@ module Celestia.Util.Math (
 ) where
 
 import Debug.Trace (trace, traceShowId)
+import qualified Data.Set as Set
+import Data.Bifunctor (Bifunctor, second, bimap)
+import Data.Function (fix)
 import Data.List ((\\))
 import Celestia.Data.List (
   duplicates,
@@ -38,6 +41,11 @@ _number_generator =
       seed = if inital_prime `mod` 2 == 0 then inital_prime + 1 else inital_prime
     in [seed, seed + 2..]
 
+
+
+-- Fixed-point factorial function
+_factorial :: Integer -> Integer
+_factorial = fix $ \f -> \n -> if n <= 0 then 1 else n * f (n - 1)
 
 
 
@@ -137,8 +145,27 @@ sieveOfSundaram' n = 2 : takeWhile ((>) n) _sieve
 
 
 
+-- Sieve of Atkin
 sieveOfAtkin :: [Int]
-sieveOfAtkin = []
+sieveOfAtkin = let 
+    s  = Set.fromList $ [1,7,11,13,17,19,23,29,31,37,41,43,47,49,53,59]
+    s1 = Set.fromList $ [1,13,17,29,37,41,49,53]
+    s2 = Set.fromList $ [7,19,31,43]
+    s3 = Set.fromList $ [11,23,47,59]
+  in []
+
+  where
+
+  pairs :: [Int] -> [(Int, Bool)]
+  pairs = fmap (flip (,) False) 
+
+  step1 :: [(Int, Bool)] -> [(Int, Bool)]
+  step1 = fmap (bimap id id)
+
+  toggle :: Bifunctor p => p a Bool -> p a Bool
+  toggle = second not
+
+
 
 sieveOfAtkin' :: Int -> [Int]
 sieveOfAtkin' n = takeWhile ((>) n) sieveOfAtkin

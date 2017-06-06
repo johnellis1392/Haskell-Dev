@@ -21,6 +21,10 @@ library
                      , Celestia.Util.Math
                      , Celestia.Data.List
   build-depends:       base >= 4.7 && < 5
+                     , contravariant
+                     , containers
+                     , regex-base
+                     , regex-tdfa
   default-language:    Haskell2010
 
 executable util-exe
@@ -29,6 +33,10 @@ executable util-exe
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , util
+                     , contravariant
+                     , containers
+                     , regex-base
+                     , regex-tdfa
   default-language:    Haskell2010
 
 test-suite util-test
@@ -41,6 +49,10 @@ test-suite util-test
   build-depends:       base
                      , util
                      , hspec
+                     , contravariant
+                     , containers
+                     , regex-base
+                     , regex-tdfa
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
 
