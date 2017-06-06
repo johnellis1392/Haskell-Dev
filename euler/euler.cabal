@@ -26,6 +26,7 @@ library
                      , Solutions.S6
                      , Solutions.S7
                      , Solutions.S8
+                     , Solutions.S9
                      , Solutions.S551
   build-depends:       base >= 4.7 && < 5
                      , util

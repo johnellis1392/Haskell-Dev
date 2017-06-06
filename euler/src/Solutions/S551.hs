@@ -54,8 +54,11 @@ s551'' n
     | i == n    = a
     | otherwise =
       let a' = foldl (+) a . fmap digitToInt . show $ a
-        in if i `mod` (10 ^ 9) == 0 then trace ("a': " ++ show a' ++ ", i: " ++ show i) _s551'' a' (i + 1)
-            else _s551'' a' (i + 1)
+        in _s551'' a' (i + 1)
+
+-- NOTE:
+-- [1,2,4,8,7,5] -> Repeated sequence formed by (`mod` 9) `fmap` series
+-- ((`mod` 9) `fmap` fmap s551'' [1..n])!!(s551'' n `mod` 6)
 
 
 -- Solution:
