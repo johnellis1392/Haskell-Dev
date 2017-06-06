@@ -27,6 +27,7 @@ library
                      , Solutions.S7
                      , Solutions.S8
                      , Solutions.S9
+                     , Solutions.S10
                      , Solutions.S551
   build-depends:       base >= 4.7 && < 5
                      , util
@@ -62,6 +63,7 @@ test-suite euler-test
                      , Solutions.S6Spec
                      , Solutions.S7Spec
                      , Solutions.S8Spec
+                     , Solutions.S10Spec
                      , Solutions.S551Spec
   default-language:    Haskell2010
 
